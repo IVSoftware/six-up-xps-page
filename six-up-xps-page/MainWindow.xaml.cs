@@ -23,12 +23,7 @@ namespace six_up_xps_page
     public partial class MainWindow : Window
     {
         public MainWindow() => InitializeComponent();
-        private void OnPageUp(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnPageDown(object sender, RoutedEventArgs e)
+        private void OnPrintPreview(object sender, RoutedEventArgs e)
         {
 
         }
@@ -89,7 +84,7 @@ namespace six_up_xps_page
         
         private static ImageSource GenerateQRCode(string qrText)
         {
-            var bitMatrix = new QRCodeWriter().encode(qrText, BarcodeFormat.QR_CODE, 150, 150);
+            var bitMatrix = new ZXing.QrCode.QRCodeWriter().encode(qrText, BarcodeFormat.QR_CODE, 150, 150);
             int width = bitMatrix.Width;
             int height = bitMatrix.Height;
             int stride = (width + 7) / 8;
