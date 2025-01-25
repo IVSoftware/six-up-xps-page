@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ZXing;
@@ -16,9 +17,13 @@ namespace six_up_xps_page
         private void OnPrintPreview(object sender, RoutedEventArgs e) => 
             new PrintPreviewWindow(DataContext.Items).ShowDialog();
         new MainWindowViewModel DataContext => (MainWindowViewModel)base.DataContext;
+
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e) =>
+            e.Cancel = e.PropertyName == nameof(UniqueNumberItem.QRCode);
     }
     class MainWindowViewModel
     {
+        // Generate a list of 15 items for test.
         public IList Items { get; } =
             new ObservableCollection<UniqueNumberItem>(
                 Enumerable

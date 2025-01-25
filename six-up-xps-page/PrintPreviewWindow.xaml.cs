@@ -1,6 +1,11 @@
-﻿using System.Collections;
+﻿using Microsoft.Win32;
+using System.Collections;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Xps.Packaging;
+using System.Windows.Xps;
 
 namespace six_up_xps_page
 {
@@ -13,7 +18,7 @@ namespace six_up_xps_page
             Items = items;
             ITEM_COUNT = items.Count;
             PAGE_COUNT = ITEM_COUNT / 6;
-            if((ITEM_COUNT % 6) != 0) PAGE_COUNT++;
+            if ((ITEM_COUNT % 6) != 0) PAGE_COUNT++;
             LoadPage();
         }
         ContentPresenter[] Tiles { get; }
@@ -28,7 +33,7 @@ namespace six_up_xps_page
                 currentIndex = PageIndex * PAGE_SIZE,
                 endIndex = Math.Min(ITEM_COUNT, currentIndex + PAGE_SIZE);
 
-            while(currentIndex<endIndex)
+            while (currentIndex < endIndex)
             {
                 var tileIndex = currentIndex % 6;
                 Tiles[tileIndex].Content = Items[currentIndex];
@@ -60,9 +65,8 @@ namespace six_up_xps_page
         }
         int _pageIndex = 0;
 
-        private void OnPrintClick(object sender, RoutedEventArgs e)
+        private async void OnPrintClick(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
