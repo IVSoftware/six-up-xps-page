@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZXing;
+using ZXing.Common;
+using ZXing.QrCode;
 
 namespace six_up_xps_page
 {
@@ -87,18 +89,29 @@ namespace six_up_xps_page
         
         private static ImageSource GenerateQRCode(string qrText)
         {
-            var writer = new BarcodeWriter<WriteableBitmap>
+            var bitMatrix = new QRCodeWriter().encode(qrText, BarcodeFormat.QR_CODE, 150, 150);
+            int width = bitMatrix.Width;
+            int height = bitMatrix.Height;
+            int stride = (width + 7) / 8;
+            byte[] pixels = new byte[width * height];
+            for (int y = 0; y < height; y++)
             {
-                Format = BarcodeFormat.QR_CODE,
-                Options = new ZXing.Common.EncodingOptions
+                for (int x = 0; x < width; x++)
                 {
-                    Height = 150,
-                    Width = 150,
-                    Margin = 0
-                },
-            };
-            WriteableBitmap qrCodeBitmap = writer.Write(qrText);
-            return qrCodeBitmap;
+                    pixels[y * width + x] = bitMatrix[x, y] ? (byte)0 : (byte)255;
+                }
+            }
+            BitmapSource bitmapSource = BitmapSource.Create(
+                width,
+                height,
+                96,
+                96,
+                PixelFormats.Gray8, 
+                null,
+                pixels,
+                width 
+            );
+            return bitmapSource;
         }
     }
 }
