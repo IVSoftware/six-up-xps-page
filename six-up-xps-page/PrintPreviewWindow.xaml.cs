@@ -67,6 +67,52 @@ namespace six_up_xps_page
 
         private async void OnPrintClick(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "XPS Document (*.xps)|*.xps",
+                DefaultExt = "xps",
+                FileName = "PrintPreview.xps"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var parent = (Panel)PreviewGrid.Parent;
+                    int childIndex = parent.Children.IndexOf(PreviewGrid);
+                    parent.Children.Remove(PreviewGrid);
+
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        FixedDocument document = new FixedDocument();
+                        FixedPage page = new FixedPage
+                        {
+                            Width = 850,
+                            Height = 1100
+                        };
+
+                        PreviewGrid.Measure(new Size(850, 1100));
+                        PreviewGrid.Arrange(new Rect(new Size(850, 1100)));
+                        page.Children.Add(PreviewGrid);
+
+                        PageContent pageContent = new PageContent { Child = page };
+                        document.Pages.Add(pageContent);
+
+                        using (XpsDocument xpsDoc = new XpsDocument(saveFileDialog.FileName, FileAccess.Write))
+                        {
+                            XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(xpsDoc);
+                            writer.Write(document);
+                        }
+                        page.Children.Remove(PreviewGrid);
+                        parent.Children.Insert(childIndex, PreviewGrid);
+                        MessageBox.Show("XPS file saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error saving XPS file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
