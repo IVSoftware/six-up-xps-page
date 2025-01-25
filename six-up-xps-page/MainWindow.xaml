@@ -10,47 +10,6 @@
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
-    <Window.Resources>
-        <DataTemplate x:Key="PrintTemplate">
-            <Border 
-            BorderThickness="2" 
-            BorderBrush="Black" 
-            CornerRadius="10" 
-            Padding="10" 
-            Margin="10">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <Image Source="{Binding QRCode}" 
-                        Width="150" Height="150" 
-                        HorizontalAlignment="Center" 
-                        Grid.Row="0" />
-
-                    <TextBlock Text="{Binding WNR}" 
-                            FontSize="16" 
-                            HorizontalAlignment="Center" 
-                            Grid.Row="1"/>
-
-                    <TextBlock Text="{Binding UniqueNumber}" 
-                            FontSize="16" 
-                            FontWeight="Bold" 
-                            HorizontalAlignment="Center" 
-                            Grid.Row="2"/>
-
-                    <TextBlock Text="{Binding Matnr}" 
-                            FontSize="16" 
-                            FontStyle="Italic" 
-                            HorizontalAlignment="Center" 
-                            Grid.Row="3"/>
-                </Grid>
-            </Border>
-        </DataTemplate>
-    </Window.Resources>
     <Grid
         Margin="10">
         <Grid.ColumnDefinitions>

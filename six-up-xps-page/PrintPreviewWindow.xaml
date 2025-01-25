@@ -1,0 +1,67 @@
+﻿<Window x:Class="six_up_xps_page.PrintPreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Print Preview" Height="800" Width="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="PreviewGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ContentPresenter 
+                x:Name="Tile1"
+                Grid.Row="0" 
+                Grid.Column="0"                
+                ContentTemplate="{StaticResource PrintTemplate}" />
+                        <ContentPresenter 
+                x:Name="Tile2"
+                Grid.Row="0" 
+                Grid.Column="1"
+                ContentTemplate="{StaticResource PrintTemplate}" />
+                        <ContentPresenter 
+                x:Name="Tile3" 
+                Grid.Row="1" 
+                Grid.Column="0"
+                ContentTemplate="{StaticResource PrintTemplate}" />
+                        <ContentPresenter 
+                x:Name="Tile4" 
+                Grid.Row="1" 
+                Grid.Column="1"
+                ContentTemplate="{StaticResource PrintTemplate}" />
+                        <ContentPresenter 
+                x:Name="Tile5" 
+                Grid.Row="2" 
+                Grid.Column="0"
+                ContentTemplate="{StaticResource PrintTemplate}" />
+                        <ContentPresenter 
+                x:Name="Tile6" 
+                Grid.Row="2" 
+                Grid.Column="1"
+                ContentTemplate="{StaticResource PrintTemplate}" />
+        </Grid>
+
+        <Button 
+            Content="Print"
+            Grid.Row="1"
+            Width="150" Height="50"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="DarkBlue"
+            Foreground="White"
+            FontSize="16"
+            FontWeight="Bold"
+            Padding="5"
+            Click="OnPrintClick"/>
+    </Grid>
+</Window>

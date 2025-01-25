@@ -2,31 +2,20 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ZXing;
-using ZXing.Common;
-using ZXing.QrCode;
+using static six_up_xps_page.Utilities;
 
 namespace six_up_xps_page
 {
     public partial class MainWindow : Window
     {
         public MainWindow() => InitializeComponent();
-        private void OnPrintPreview(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void OnPrintPreview(object sender, RoutedEventArgs e) => 
+            new PrintPreviewWindow(DataContext.Items).ShowDialog();
+        new MainWindowViewModel DataContext => (MainWindowViewModel)base.DataContext;
     }
     class MainWindowViewModel
     {
@@ -72,8 +61,10 @@ namespace six_up_xps_page
                     break;
             }
         }
-
-        private static string GenerateName(string prefix, int length) =>
+    }
+    static class Utilities
+    {
+        public static string GenerateName(string prefix, int length) =>
             $"{prefix}{
                 Guid
                 .NewGuid()
@@ -81,8 +72,8 @@ namespace six_up_xps_page
                 .ToUpper()
                 .Replace("-", string.Empty
                     ).Substring(0,length)}";
-        
-        private static ImageSource GenerateQRCode(string qrText)
+
+        public static ImageSource GenerateQRCode(string qrText)
         {
             var bitMatrix = new ZXing.QrCode.QRCodeWriter().encode(qrText, BarcodeFormat.QR_CODE, 150, 150);
             int width = bitMatrix.Width;
