@@ -14,14 +14,18 @@ namespace six_up_xps_page
             ITEM_COUNT = items.Count;
             PAGE_COUNT = ITEM_COUNT / 6;
             if((ITEM_COUNT % 6) != 0) PAGE_COUNT++;
-            LoadPage(_pageIndex);
+            LoadPage();
         }
         ContentPresenter[] Tiles { get; }
 
-        private void LoadPage(int pageIndex)
+        private void LoadPage()
         {
+            foreach (var tile in Tiles)
+            {
+                tile.Content = null;
+            }
             int
-                currentIndex = _pageIndex * PAGE_SIZE,
+                currentIndex = PageIndex * PAGE_SIZE,
                 endIndex = Math.Min(ITEM_COUNT, currentIndex + PAGE_SIZE);
 
             while(currentIndex<endIndex)
@@ -33,10 +37,28 @@ namespace six_up_xps_page
         }
 
         IList Items { get; }
-        private int _pageIndex = 0;
         private readonly int ITEM_COUNT;
         private readonly int PAGE_COUNT;
         const int PAGE_SIZE = 6;
+
+        private void OnPageUpClick(object sender, RoutedEventArgs e) => PageIndex++;
+
+        private void OnPageDownClick(object sender, RoutedEventArgs e) => PageIndex--;
+        public int PageIndex
+        {
+            get => _pageIndex;
+            set
+            {
+                value = Math.Max(value, 0);
+                value = Math.Min(value, PAGE_COUNT - 1);
+                if (!Equals(_pageIndex, value))
+                {
+                    _pageIndex = value;
+                    LoadPage();
+                }
+            }
+        }
+        int _pageIndex = 0;
 
         private void OnPrintClick(object sender, RoutedEventArgs e)
         {

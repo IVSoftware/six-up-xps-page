@@ -51,17 +51,40 @@
                 ContentTemplate="{StaticResource PrintTemplate}" />
         </Grid>
 
-        <Button 
-            Content="Print"
-            Grid.Row="1"
-            Width="150" Height="50"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="DarkBlue"
-            Foreground="White"
-            FontSize="16"
-            FontWeight="Bold"
-            Padding="5"
-            Click="OnPrintClick"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+
+            <Button 
+                Content="◀"
+                Width="150" Height="50"
+                Margin="10,0"
+                Background="DarkBlue"
+                Foreground="White"
+                FontSize="16"
+                FontWeight="Bold"
+                Padding="5"
+                Click="OnPageDownClick"/>
+            
+            <Button 
+                Content="▶"
+                Width="150" Height="50"
+                Margin="10,0"
+                Background="DarkBlue"
+                Foreground="White"
+                FontSize="16"
+                FontWeight="Bold"
+                Padding="5"
+                Click="OnPageUpClick"/>
+
+            <Button 
+                Content="Print"
+                Width="150" Height="50"
+                Margin="10,0"
+                Background="DarkGreen"
+                Foreground="White"
+                FontSize="16"
+                FontWeight="Bold"
+                Padding="5"
+                Click="OnPrintClick"/>
+        </StackPanel>
     </Grid>
 </Window>
