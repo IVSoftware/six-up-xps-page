@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:six_up_xps_page"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1000"
+        Title="MainWindow" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -55,7 +55,7 @@
         Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <DataGrid Grid.Column="0"
@@ -63,12 +63,12 @@
                   ColumnWidth="*"
                   ItemsSource="{Binding Items}" 
                   Margin="10"
-                  IsReadOnly="False"/>
+                  IsReadOnly="False"
+                  CanUserAddRows="False"/>
         <ListBox x:Name="listBox10"
                  Grid.Column="1"
                  ItemTemplate="{StaticResource PrintTemplate}"
                  ItemsSource="{Binding Items}"
-                 Width="400" Height="700"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  Margin="10">
         </ListBox>
