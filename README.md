@@ -1,4 +1,4 @@
-﻿This is an interesting question with a lot of nuances. I'll try and hit the main points conceptually, but my my code snippets and approach may not be an "exact" fit for what you're doing and you'll still have to adapt a lot of it to your specifics. 
+﻿This is an interesting question with a lot of nuances. I'll try and hit the main points conceptually, but my code snippets and approach may not be an "exact" fit for what you're doing and you'll still have to adapt a lot of it to your specifics. 
 
 Since exporting the XPS document seems to be one of the main goals, I want to start with a forward reference to where the Print Preview has been successfully populated. Rather than clone this tree in order to make the XPS document, for example from a grid named `PreviewGrid`, you might experiment with **1.** Detaching `PreviewGrid` from the UI view **2.** temporarily adding `PreviewGrid` as page content directly before **3.** reversing the process and putting it back where it was:
 
