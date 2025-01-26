@@ -1,90 +1,45 @@
 ﻿<Window x:Class="six_up_xps_page.PrintPreviewWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Print Preview" Height="1100" Width="850"
+        Title="Print Preview" Height="1100" Width="850" 
         WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="PreviewGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ContentPresenter 
-                x:Name="Tile1"
-                Grid.Row="0" 
-                Grid.Column="0"                
-                ContentTemplate="{StaticResource PrintTemplate}" />
-                        <ContentPresenter 
-                x:Name="Tile2"
-                Grid.Row="0" 
-                Grid.Column="1"
-                ContentTemplate="{StaticResource PrintTemplate}" />
-                        <ContentPresenter 
-                x:Name="Tile3" 
-                Grid.Row="1" 
-                Grid.Column="0"
-                ContentTemplate="{StaticResource PrintTemplate}" />
-                        <ContentPresenter 
-                x:Name="Tile4" 
-                Grid.Row="1" 
-                Grid.Column="1"
-                ContentTemplate="{StaticResource PrintTemplate}" />
-                        <ContentPresenter 
-                x:Name="Tile5" 
-                Grid.Row="2" 
-                Grid.Column="0"
-                ContentTemplate="{StaticResource PrintTemplate}" />
-                        <ContentPresenter 
-                x:Name="Tile6" 
-                Grid.Row="2" 
-                Grid.Column="1"
-                ContentTemplate="{StaticResource PrintTemplate}" />
+
+            <ContentPresenter x:Name="Tile1" Grid.Row="0" Grid.Column="0" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile2" Grid.Row="0" Grid.Column="1" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile3" Grid.Row="1" Grid.Column="0" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile4" Grid.Row="1" Grid.Column="1" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile5" Grid.Row="2" Grid.Column="0" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile6" Grid.Row="2" Grid.Column="1" ContentTemplate="{StaticResource PrintTemplate}" />
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="◀" Width="150" Height="50" Margin="10,0" 
+                    Background="DarkBlue" Foreground="White" FontSize="16" 
+                    FontWeight="Bold" Padding="5" Click="OnPageDownClick"/>
 
-            <Button 
-                Content="◀"
-                Width="150" Height="50"
-                Margin="10,0"
-                Background="DarkBlue"
-                Foreground="White"
-                FontSize="16"
-                FontWeight="Bold"
-                Padding="5"
-                Click="OnPageDownClick"/>
-            
-            <Button 
-                Content="▶"
-                Width="150" Height="50"
-                Margin="10,0"
-                Background="DarkBlue"
-                Foreground="White"
-                FontSize="16"
-                FontWeight="Bold"
-                Padding="5"
-                Click="OnPageUpClick"/>
+            <Button Content="▶" Width="150" Height="50" Margin="10,0" 
+                    Background="DarkBlue" Foreground="White" FontSize="16" 
+                    FontWeight="Bold" Padding="5" Click="OnPageUpClick"/>
 
-            <Button 
-                Content="Print"
-                Width="150" Height="50"
-                Margin="10,0"
-                Background="DarkGreen"
-                Foreground="White"
-                FontSize="16"
-                FontWeight="Bold"
-                Padding="5"
-                Click="OnPrintClick"/>
+            <Button Content="Print" Width="150" Height="50" Margin="10,0" 
+                    Background="DarkGreen" Foreground="White" FontSize="16" 
+                    FontWeight="Bold" Padding="5" Click="OnPrintClick"/>
         </StackPanel>
     </Grid>
 </Window>

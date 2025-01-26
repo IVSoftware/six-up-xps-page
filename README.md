@@ -1,4 +1,4 @@
-This is an interesting question with a lot of nuances. You'll have to forgive me if my example or approach isn't an "exact" fit for what you're doing. However, you asked it this way:
+﻿This is an interesting question with a lot of nuances. You'll have to forgive me if my example or approach isn't an "exact" fit for what you're doing. However, you asked it this way:
 
 >Is there any better way to get this done?
 
@@ -99,5 +99,100 @@ ___
 
 **Why it Matters**
 
-We can use the _same list_ as a source for a `DataGrid` for editing, while watching real-time changes to the scrolling list beside it.
+The _same list_ can be a source for a `DataGrid` for editing _and_ the scrolling list beside it, which reflects changes in real time as they are made.
 
+~~~
+<Window x:Class="six_up_xps_page.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:six_up_xps_page"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid
+                Grid.Column="0" AutoGenerateColumns="True" ColumnWidth="*" 
+                ItemsSource="{Binding Items}" Margin="10" IsReadOnly="False"
+                CanUserAddRows="False"/>
+            <Button
+                Grid.Row="1" Content="Print Preview" Width="150" Height="50"
+                Margin="10" Background="DarkBlue" Foreground="White" FontSize="16"
+                FontWeight="Bold" Padding="5" BorderThickness="2" BorderBrush="Black"
+                Click="OnPrintPreview"/>
+        </Grid>
+        <ListBox
+            x:Name="listBox10" Grid.Column="1"
+            ItemTemplate="{StaticResource PrintTemplate}" ItemsSource="{Binding Items}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10"/>
+    </Grid>
+</Window>
+~~~
+
+___
+
+**Print Preview**
+
+The _same list_ can be passed to the print preview boxes, shown here with some basic page navigation.
+
+~~~
+<Window x:Class="six_up_xps_page.PrintPreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Print Preview" Height="1100" Width="850" 
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="PreviewGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter x:Name="Tile1" Grid.Row="0" Grid.Column="0" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile2" Grid.Row="0" Grid.Column="1" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile3" Grid.Row="1" Grid.Column="0" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile4" Grid.Row="1" Grid.Column="1" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile5" Grid.Row="2" Grid.Column="0" ContentTemplate="{StaticResource PrintTemplate}" />
+            <ContentPresenter x:Name="Tile6" Grid.Row="2" Grid.Column="1" ContentTemplate="{StaticResource PrintTemplate}" />
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="◀" Width="150" Height="50" Margin="10,0" 
+                    Background="DarkBlue" Foreground="White" FontSize="16" 
+                    FontWeight="Bold" Padding="5" Click="OnPageDownClick"/>
+
+            <Button Content="▶" Width="150" Height="50" Margin="10,0" 
+                    Background="DarkBlue" Foreground="White" FontSize="16" 
+                    FontWeight="Bold" Padding="5" Click="OnPageUpClick"/>
+
+            <Button Content="Print" Width="150" Height="50" Margin="10,0" 
+                    Background="DarkGreen" Foreground="White" FontSize="16" 
+                    FontWeight="Bold" Padding="5" Click="OnPrintClick"/>
+        </StackPanel>
+    </Grid>
+</Window>
+~~~

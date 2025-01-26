@@ -10,11 +10,10 @@
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid
-        Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid>
@@ -22,34 +21,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <DataGrid 
-                Grid.Column="0"
-                AutoGenerateColumns="True"
-                ColumnWidth="*"
-                ItemsSource="{Binding Items}" 
-                Margin="10"
-                IsReadOnly="False"
+            <DataGrid
+                Grid.Column="0" AutoGenerateColumns="True" ColumnWidth="*" 
+                ItemsSource="{Binding Items}" Margin="10" IsReadOnly="False"
                 CanUserAddRows="False"/>
-            <Button 
-                Grid.Row="1" 
-                Content="Print Preview" 
-                Width="150" Height="50"
-                Margin="10"
-                Background="DarkBlue"
-                Foreground="White"
-                FontSize="16"
-                FontWeight="Bold"
-                Padding="5"
-                BorderThickness="2"
-                BorderBrush="Black"
+            <Button
+                Grid.Row="1" Content="Print Preview" Width="150" Height="50"
+                Margin="10" Background="DarkBlue" Foreground="White" FontSize="16"
+                FontWeight="Bold" Padding="5" BorderThickness="2" BorderBrush="Black"
                 Click="OnPrintPreview"/>
         </Grid>
-        <ListBox x:Name="listBox10"
-                    Grid.Column="1"
-                    ItemTemplate="{StaticResource PrintTemplate}"
-                    ItemsSource="{Binding Items}"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    Margin="10">
-        </ListBox>
+        <ListBox
+            x:Name="listBox10" Grid.Column="1"
+            ItemTemplate="{StaticResource PrintTemplate}" ItemsSource="{Binding Items}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10"/>
     </Grid>
 </Window>
