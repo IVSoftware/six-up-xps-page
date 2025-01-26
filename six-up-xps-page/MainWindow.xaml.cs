@@ -14,7 +14,7 @@ namespace six_up_xps_page
     }
     class MainWindowViewModel
     {
-        // Generate a list of 15 items for test.
+        // THE SOURCE LIST - With 15 items initially populated for test.
         public IList Items { get; } =
             new ObservableCollection<UniqueNumberItem>(
                 Enumerable
