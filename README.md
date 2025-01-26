@@ -2,7 +2,9 @@
 
 >Is there any better way to get this done?
 
-If I'm understanding your code and intent, then yes the better way would be making sure that the _document_ (the data) is being properly decoupled from the view that displays it. You shouldn't have to clone anything, but especially not framework elements. Everything you are doing seems to rely on an implied data record that could be represented as:
+If I'm understanding your code and intent, then yes the better way would be making sure that the _document_ (the data) is being properly decoupled from the view that displays it. You shouldn't have to clone anything, but especially not framework elements. My reason for saying this is that everything you're doing seems to rely on an "implied data record" that conceptually could be represented similar to this:
+
+**Model**
 
 ~~~
 partial class UniqueNumberItem : ObservableObject
@@ -20,8 +22,9 @@ partial class UniqueNumberItem : ObservableObject
 
 ___
 
-You may be doing this in some form already, but the idea is to have a portable ViewModel that implements `INotifyPropertyChanged`, and have the observable Items be sourced in a single location. You can clear this list, or add and remove items from it, but cloning or copying it should not be necessary.
+If this data model is incorporated in an observable collection that resides in a portable `ViewModel`, this single source can be consumed by multiple views. You can clear this list, or add and remove items from it, but cloning or copying it should not be necessary.
 
+**View Model**
 ~~~
 class MainWindowViewModel
 {
@@ -46,6 +49,8 @@ class MainWindowViewModel
 ___
 
 Now we just need a reusable way to display one of these records, the data template named `PrintTemplate`, which can be put into App.xaml so that it's visible to all. If we want to have a linear `listbox10` we can use the data template to popolate it. If you want 6-up on a page for a print preview, we can use the data template to populate it.
+
+**Data Template**
 
 ~~~
 <Application x:Class="six_up_xps_page.App"
@@ -94,7 +99,7 @@ Now we just need a reusable way to display one of these records, the data templa
     </Application.Resources>
 </Application>
 ~~~
-
+[![single data template][1]][1]
 ___
 
 **Why it Matters**
@@ -142,7 +147,7 @@ The _same list_ can be a source for a `DataGrid` for editing _and_ the scrolling
     </Grid>
 </Window>
 ~~~
-
+[![data grid and list view][2]][2]
 ___
 
 **Print Preview**
@@ -196,3 +201,9 @@ The _same list_ can be passed to the print preview boxes, shown here with some b
     </Grid>
 </Window>
 ~~~
+[![print preview][3]][3]
+
+
+  [1]: https://i.sstatic.net/Cb5HxP5r.png
+  [2]: https://i.sstatic.net/TMD5VqWJ.png
+  [3]: https://i.sstatic.net/BHWfx3iz.png
