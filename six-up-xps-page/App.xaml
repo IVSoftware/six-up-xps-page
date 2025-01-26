@@ -21,7 +21,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="{Binding UniqueMember, Converter={StaticResource StringToQRCodeConverter}}" 
+                    <Image Source="{Binding UniqueNumber, Converter={StaticResource StringToQRCodeConverter}}" 
                         Width="150" Height="150" 
                         HorizontalAlignment="Center" 
                         Grid.Row="0" />
