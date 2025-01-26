@@ -1,8 +1,65 @@
-﻿This is an interesting question with a lot of nuances. You'll have to forgive me if my example or approach isn't an "exact" fit for what you're doing. However, you asked it this way:
+﻿This is an interesting question with a lot of nuances. I'll try and hit the main points conceptually, but my my code snippets and approach may not be an "exact" fit for what you're doing and you'll still have to adapt a lot of it to your specifics. 
+
+Since exporting the XPS document seems to be one of the main goals, I want to start with a forward reference to where the Print Preview has been successfully populated. Rather than clone this tree in order to make the XPS document, for example from a grid named `PreviewGrid`, you might experiment with **1.** Detaching `PreviewGrid` from the UI view **2.** temporarily adding `PreviewGrid` as page content directly before **3.** reversing the process and putting it back where it was:
+
+**Print Single Page to XPS Document**
+~~~
+private async void OnPrintClick(object sender, RoutedEventArgs e)
+{
+    SaveFileDialog saveFileDialog = new SaveFileDialog
+    {
+        Filter = "XPS Document (*.xps)|*.xps",
+        DefaultExt = "xps",
+        FileName = "PrintPreview.xps"
+    };
+
+    if (saveFileDialog.ShowDialog() == true)
+    {
+        try
+        {
+            var parent = (Panel)PreviewGrid.Parent;
+            int childIndex = parent.Children.IndexOf(PreviewGrid);
+            parent.Children.Remove(PreviewGrid);
+            await Dispatcher.InvokeAsync(() =>
+            {
+                FixedDocument document = new FixedDocument();
+                FixedPage page = new FixedPage
+                {
+                    Width = 850,
+                    Height = 1100
+                };
+
+                PreviewGrid.Measure(new Size(850, 1100));
+                PreviewGrid.Arrange(new Rect(new Size(850, 1100)));
+                page.Children.Add(PreviewGrid);
+
+                PageContent pageContent = new PageContent { Child = page };
+                document.Pages.Add(pageContent);
+
+                using (XpsDocument xpsDoc = new XpsDocument(saveFileDialog.FileName, FileAccess.Write))
+                {
+                    XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(xpsDoc);
+                    writer.Write(document);
+                }
+                page.Children.Remove(PreviewGrid);
+                parent.Children.Insert(childIndex, PreviewGrid);
+                MessageBox.Show("XPS file saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            });
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error saving XPS file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+}
+~~~
+___
+
+Another strategy for avoiding having to copy things is to have a good separation of data itself from the UI views that display the same data collection in various different formats and forms. You're giving me a bit of leeway by asking it this way:
 
 >Is there any better way to get this done?
 
-If I'm understanding your code and intent, then yes the better way would be making sure that the _document_ (the data) is being properly decoupled from the view that displays it. You shouldn't have to clone anything, but especially not framework elements. My reason for saying this is that everything you're doing seems to rely on an "implied data record" that conceptually could be represented similar to this:
+So, if I'm understanding your code and intent, then yes the better way would be making sure that the _document_ (the data) is being properly decoupled from the view that displays it. You shouldn't have to clone anything, but especially not framework elements. My reason for saying this is that everything you're doing seems to rely on an "implied data record" that conceptually could be represented similar to this:
 
 **Model**
 
@@ -48,7 +105,7 @@ class MainWindowViewModel
 ~~~
 ___
 
-Now we just need a reusable way to display one of these records, the data template named `PrintTemplate`, which can be put into App.xaml so that it's visible to all. If we want to have a linear `listbox10` we can use the data template to popolate it. If you want 6-up on a page for a print preview, we can use the data template to populate it.
+Now we just need a reusable way to display one of these records, the data template named `PrintTemplate`, which can be put into **App.xaml** so that it's visible to all. If we want to have a linear `listbox10` we can use the data template to populate it. If you want 6-up on a page for a print preview, we can use the data template to populate it.
 
 **Data Template**
 

@@ -81,7 +81,6 @@ namespace six_up_xps_page
                     var parent = (Panel)PreviewGrid.Parent;
                     int childIndex = parent.Children.IndexOf(PreviewGrid);
                     parent.Children.Remove(PreviewGrid);
-
                     await Dispatcher.InvokeAsync(() =>
                     {
                         FixedDocument document = new FixedDocument();
