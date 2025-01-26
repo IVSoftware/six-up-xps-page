@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:six_up_xps_page"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <local:StringToQRCodeConverter x:Key="StringToQRCodeConverter" />
         <DataTemplate
             x:Key="PrintTemplate">
             <Border 
@@ -20,7 +21,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="{Binding QRCode}" 
+                    <Image Source="{Binding UniqueMember, Converter={StaticResource StringToQRCodeConverter}}" 
                         Width="150" Height="150" 
                         HorizontalAlignment="Center" 
                         Grid.Row="0" />
